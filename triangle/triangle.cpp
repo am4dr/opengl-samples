@@ -60,7 +60,8 @@ void init(GLuint &vao, GLuint &vbo) {
 //
 int main(int argc, char** argv) {
     GLFWwindow *window = 
-        suika::glfw::initializeWindowAndContext(480, 480, "triangle", nullptr, nullptr, true);
+        suika::glfw::initializeWindowAndContext(
+            480, 480, "triangle", nullptr, nullptr, true);
 
     GLuint vao;
     GLuint vbo;

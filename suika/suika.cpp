@@ -27,8 +27,8 @@ namespace suika {
         void error_callback(int error, const char *description){
             cerr << description << endl;
         }
-        GLFWwindow *initializeWindowAndContext(int width, int height, const char* title,
-            GLFWmonitor* monitor, GLFWwindow* share, bool debug) {
+        GLFWwindow *initializeWindowAndContext(int width, int height,
+            const char* title, GLFWmonitor* monitor, GLFWwindow* share, bool debug) {
             glfwSetErrorCallback(&suika::glfw::error_callback);
             glfwInit();
             if (debug) {
@@ -44,8 +44,10 @@ namespace suika {
         }
     }
     namespace gl {
-        void APIENTRY debug_message_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam) {
-            ostream &out = userParam != nullptr ? *static_cast<ostream *>(userParam) : std::cerr;
+        void APIENTRY debug_message_callback(GLenum source, GLenum type, GLuint id,
+            GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam) {
+            ostream &out =
+                userParam != nullptr ? *static_cast<ostream *>(userParam) : std::cerr;
             out << "message: " << message << std::endl;
         }
     }
@@ -62,7 +64,8 @@ namespace suika {
             return name;
         }
 
-        ShaderSource readShaderSource(GLenum type, const string &filename, const string &name) {
+        ShaderSource readShaderSource(GLenum type, const string &filename,
+            const string &name) {
             string source = readFile(filename);
             return ShaderSource(type, source, name == "" ? filename : name);
         }
@@ -70,14 +73,16 @@ namespace suika {
             vector<GLuint> shaders;
             for (const ShaderSource &source : sources) {
                 GLuint shader = glCreateShader(source.getType());
-                const GLchar *src = const_cast<const GLchar *>(source.getSource().c_str());
+                const GLchar *src = 
+                    const_cast<const GLchar *>(source.getSource().c_str());
                 glShaderSource(shader, 1, &src, nullptr);
                 glCompileShader(shader);
                 GLint compiledStatus;
                 glGetShaderiv(shader, GL_COMPILE_STATUS, &compiledStatus);
                 if (compiledStatus != GL_TRUE) {
                     auto log = getShaderInfoLog(shader);
-                    cerr << "Shader compilation failed (" << source.getName() << "):\n" << log << endl;
+                    cerr << "Shader compilation failed (" << source.getName() 
+                         << "):\n" << log << endl;
                     return 0;
                 }
                 shaders.push_back(shader);

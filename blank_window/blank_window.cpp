@@ -17,7 +17,8 @@ int main(int argc, char** argv) {
         exit(EXIT_FAILURE);
     }
     glfwMakeContextCurrent(window);
-    glfwSetKeyCallback(window, [](GLFWwindow *window, int key, int scancode, int action, int mods){
+    glfwSetKeyCallback(window, 
+        [](GLFWwindow *window, int key, int scancode, int action, int mods) {
         if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS) {
             glfwSetWindowShouldClose(window, GL_TRUE);
         }

@@ -18,13 +18,15 @@ namespace suika {
             std::string source;
             std::string name;
         public:
-            ShaderSource(GLenum type, const std::string &source, const std::string &name = "");
+            ShaderSource(GLenum type, const std::string &source,
+                const std::string &name = "");
             GLenum getType() const;
             const std::string &getSource() const;
             const std::string &getName() const;
         };
         // シェーダのソースファイルからShaderSourceを作成する。
-        ShaderSource readShaderSource(GLenum type, const std::string &filename, const std::string &name = "");
+        ShaderSource readShaderSource(GLenum type, const std::string &filename,
+            const std::string &name = "");
         // 複数のShaderSourceをコンパイルおよびリンクしてプログラムを作成する。
         GLuint createShaderProgram(const std::vector<ShaderSource> &sources);
         std::shared_ptr<GLchar> getShaderInfoLog(GLuint shader);
@@ -39,14 +41,16 @@ namespace suika {
         // 次のことを行う。
         // - glfwへのエラーコールバックの登録
         // - glfwInit
-        // - glfwCreateWindowによるGLFWwindowの生成
-        // - glfwMakeContextCurrentによる生成したウィンドウのコンテキストをカレントに設定
+        // - glfwCreateWindowでGLFWwindowの生成
+        // - glfwMakeContextCurrentで生成したウィンドウのコンテキストをカレントに設定
         // - glewInit
         GLFWwindow *initializeWindowAndContext(int width, int height, const char* title,
             GLFWmonitor* monitor, GLFWwindow* share, bool debug=false);
     }
     namespace gl {
-        void APIENTRY debug_message_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam = nullptr);
+        void APIENTRY debug_message_callback(GLenum source, GLenum type,
+            GLuint id, GLenum severity, GLsizei length, const GLchar* message,
+            GLvoid* userParam = nullptr);
     }
 }
 #endif // INCLUDE_GUARD_AMADARE_SUIKA_20140430
