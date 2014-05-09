@@ -34,7 +34,6 @@ namespace suika {
     std::string readFile(const std::string &filename);
     namespace glfw {
         void error_callback(int, const char *);
-        void initGLFW();
     }
     namespace gl {
         void APIENTRY debug_message_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam = nullptr);

@@ -24,12 +24,6 @@ namespace suika {
         return res;
     }
     namespace glfw {
-        void initGLFW() {
-            glfwSetErrorCallback(&suika::glfw::error_callback);
-            if (!glfwInit()) {
-                exit(EXIT_FAILURE);
-            }
-        }
         void error_callback(int error, const char *description){
             cerr << description << endl;
         }
