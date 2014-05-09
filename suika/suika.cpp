@@ -27,6 +27,21 @@ namespace suika {
         void error_callback(int error, const char *description){
             cerr << description << endl;
         }
+        GLFWwindow *initializeWindowAndContext(int width, int height, const char* title,
+            GLFWmonitor* monitor, GLFWwindow* share, bool debug) {
+            glfwSetErrorCallback(&suika::glfw::error_callback);
+            glfwInit();
+            if (debug) {
+                glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
+            }
+            GLFWwindow *window = glfwCreateWindow(width, height, title, monitor, share);
+            glfwMakeContextCurrent(window);
+            glewInit();
+            if (debug) {
+                glDebugMessageCallback(suika::gl::debug_message_callback, &std::cerr);
+            }
+            return window;
+        }
     }
     namespace gl {
         void APIENTRY debug_message_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam) {

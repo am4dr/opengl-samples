@@ -34,6 +34,16 @@ namespace suika {
     std::string readFile(const std::string &filename);
     namespace glfw {
         void error_callback(int, const char *);
+        // ひとつのウィンドウとコンテキストを使用する際に記述を省略する関数
+        // 引数debugにより、デバッグ用のコンテキストを作成するかを選択できる。
+        // 次のことを行う。
+        // - glfwへのエラーコールバックの登録
+        // - glfwInit
+        // - glfwCreateWindowによるGLFWwindowの生成
+        // - glfwMakeContextCurrentによる生成したウィンドウのコンテキストをカレントに設定
+        // - glewInit
+        GLFWwindow *initializeWindowAndContext(int width, int height, const char* title,
+            GLFWmonitor* monitor, GLFWwindow* share, bool debug=false);
     }
     namespace gl {
         void APIENTRY debug_message_callback(GLenum source, GLenum type, GLuint id, GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam = nullptr);

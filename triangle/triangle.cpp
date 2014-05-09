@@ -59,13 +59,8 @@ void init(GLuint &vao, GLuint &vbo) {
 // main
 //
 int main(int argc, char** argv) {
-    glfwSetErrorCallback(&suika::glfw::error_callback);
-    glfwInit();
-    glfwWindowHint(GLFW_OPENGL_DEBUG_CONTEXT, 1);
-    GLFWwindow *window = glfwCreateWindow(480, 480, "triangle", nullptr, nullptr);
-    glfwMakeContextCurrent(window);
-    glewInit();
-    glDebugMessageCallback(suika::gl::debug_message_callback, &std::cerr);
+    GLFWwindow *window = 
+        suika::glfw::initializeWindowAndContext(480, 480, "triangle", nullptr, nullptr, true);
 
     GLuint vao;
     GLuint vbo;
