@@ -16,6 +16,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "suika", "suika\suika.vcxpro
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "triangle", "triangle\triangle.vcxproj", "{07E9E550-A74E-4F54-96CB-91D143EE5667}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "transform_feedback", "transform_feedback\transform_feedback.vcxproj", "{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug MX|Win32 = Debug MX|Win32
@@ -64,6 +66,18 @@ Global
 		{07E9E550-A74E-4F54-96CB-91D143EE5667}.Release|Win32.ActiveCfg = Release|Win32
 		{07E9E550-A74E-4F54-96CB-91D143EE5667}.Release|Win32.Build.0 = Release|Win32
 		{07E9E550-A74E-4F54-96CB-91D143EE5667}.Release|x64.ActiveCfg = Release|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Debug MX|Win32.ActiveCfg = Debug|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Debug MX|Win32.Build.0 = Debug|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Debug MX|x64.ActiveCfg = Debug|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Debug|Win32.Build.0 = Debug|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Debug|x64.ActiveCfg = Debug|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Release MX|Win32.ActiveCfg = Release|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Release MX|Win32.Build.0 = Release|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Release MX|x64.ActiveCfg = Release|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Release|Win32.ActiveCfg = Release|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Release|Win32.Build.0 = Release|Win32
+		{4EC6FFFF-D20F-4716-8F4F-C54EFA3BA9C2}.Release|x64.ActiveCfg = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
