@@ -73,13 +73,13 @@ int main(int argc, char **argv) {
         "   vec2 pos = 1.5f * position;"
         "   newPosition = pos;"
         "   gl_Position = vec4(position, 0.0f, 1.0f);"
-        "}"), "vertex shader"));
+        "}"), "particle vertex shader"));
     particleSources.push_back(suika::shader::ShaderSource(GL_FRAGMENT_SHADER, std::string(
         "#version 330 core\n"
         "layout(location=0) out vec4 color;"
         "void main(void) {"
         "   color = vec4(0.8f, 0.8f, 0.8f, 1.0f);"
-        "}"), "fragment shader"));
+        "}"), "particle fragment shader"));
     GLuint particleProgram = suika::shader::createShaderProgram(particleSources);
     glUseProgram(particleProgram);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
