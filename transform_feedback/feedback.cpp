@@ -77,7 +77,6 @@ int main(int argc, char **argv) {
     const GLuint &particlePositionVBO = particleVBO[0];
     const GLuint &particleColorVBO = particleVBO[1];
     glGenBuffers(2, particleVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO);
     const int numberOfParticles = initialSize * initialSize;
     auto particlePositions =
         std::unique_ptr<GLfloat[]>(new GLfloat[2*numberOfParticles]);
@@ -100,17 +99,15 @@ int main(int argc, char **argv) {
                 4.0f * (x*x + y*y) / (initialSize*initialSize);
         }
     }
+    glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO);
     glBufferData(GL_ARRAY_BUFFER,
-        sizeof(GLfloat)* 2 * numberOfParticles + sizeof(GLfloat)*numberOfParticles,
-            nullptr, GL_STATIC_DRAW);
-    glBufferSubData(GL_ARRAY_BUFFER, 0,
-        sizeof(GLfloat)*2*numberOfParticles, particlePositions.get());
-    glBufferSubData(GL_ARRAY_BUFFER, sizeof(GLfloat)* 2 * numberOfParticles,
-        sizeof(GLfloat)*numberOfParticles, particleColors.get());
+        sizeof(GLfloat) * 2 * numberOfParticles, particlePositions.get(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 0,
-        reinterpret_cast<GLvoid *>(sizeof(GLfloat)* 2 * numberOfParticles));
+    glBindBuffer(GL_ARRAY_BUFFER, particleColorVBO);
+    glBufferData(GL_ARRAY_BUFFER,
+        sizeof(GLfloat) * numberOfParticles, particleColors.get(), GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 0, 0);
     glEnableVertexAttribArray(1);
 
     GLuint feedback;
@@ -119,7 +116,6 @@ int main(int argc, char **argv) {
     glBufferData(GL_TRANSFORM_FEEDBACK_BUFFER,
         sizeof(GLfloat)*2*numberOfParticles, nullptr, GL_STATIC_COPY);
     const char *varyings[] = { "newPosition" };
-    glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, feedback);
     glTransformFeedbackVaryings(particleProgram, 1, varyings, GL_INTERLEAVED_ATTRIBS);
     glLinkProgram(particleProgram);
 
@@ -133,10 +129,12 @@ int main(int argc, char **argv) {
 
         glUseProgram(particleProgram);
         glBindVertexArray(particleVAO);
+        glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, feedback);
         glBeginTransformFeedback(GL_POINTS);
         static bool flag = true;
         glDrawArrays(GL_POINTS, 0, numberOfParticles);
         glEndTransformFeedback();
+        glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO);
         glCopyBufferSubData(GL_TRANSFORM_FEEDBACK_BUFFER, GL_ARRAY_BUFFER,
             0, 0, sizeof(GLfloat)*2*numberOfParticles);
 
