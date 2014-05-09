@@ -1,6 +1,6 @@
 #pragma comment(lib, "opengl32")
 #include <iostream>
-#include "suika.h"
+#include "../suika/suika.h"
 using namespace std;
 
 void init(GLuint &vao, GLuint &vbo) {
