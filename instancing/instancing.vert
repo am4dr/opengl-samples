@@ -7,8 +7,8 @@ layout(location = 2) in vec3 instanceColor;
 out vec4 vColor;
 
 void main(void) {
-    gl_Position = vec4((position / 10.0) + instancePosition, 1.0f);
-    //gl_Position = vec4(position, 1.0f);
-    // gl_Position = vec4(instancePosition, 1.0f);
+    float scale = 0.1f * (instancePosition.z + 2.0f);
+    gl_Position = 
+        vec4((position * scale) + instancePosition, 1.0f);
     vColor = vec4(instanceColor, 1.0f);
 }

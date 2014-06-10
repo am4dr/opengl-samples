@@ -24,14 +24,14 @@ void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte rest
          0.0f, -1.0f,  0.0f,
     };
     GLubyte indices[] = {
-        0, 1, 2, 3, 4, restartMarker, 5, 4, 3, 2, 1
+        0, 1, 2, 3, 4, 1, restartMarker, 5, 4, 3, 2, 1, 4
     };
     glBindBuffer(GL_ARRAY_BUFFER, verticesVBO);
     glBufferData(GL_ARRAY_BUFFER,
         sizeof(GLfloat) * 3 * 6, vertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesVBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-        sizeof(GLbyte) * 11, indices, GL_STATIC_DRAW);
+        sizeof(GLbyte) * 13, indices, GL_STATIC_DRAW);
 }
 std::unique_ptr<GLfloat[]> create3elementsData(const GLfloat start, const GLfloat end, const int size) {
     return nullptr;
@@ -112,7 +112,7 @@ int main(int argc, char **argv) {
     // インスタンスごとに設定するデータをバッファに入れる
     GLuint instancePositionBuffer;
     GLuint instanceColorBuffer;
-    const int instancingSize = 2;
+    const int instancingSize = 5;
     const int instanceNumber = instancingSize * instancingSize * instancingSize;
     createInstanceData(
         instancePositionBuffer, instanceColorBuffer, instancingSize);
@@ -124,10 +124,10 @@ int main(int argc, char **argv) {
     GLuint vao;
     glGenVertexArrays(1, &vao);
     glBindVertexArray(vao);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelElementsIndicesBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, modelVerticesBuffer);
     glVertexAttribPointer(positionLocation, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
     glEnableVertexAttribArray(positionLocation);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, modelElementsIndicesBuffer);
     // インスタンスごとのAttrib設定
     glBindBuffer(GL_ARRAY_BUFFER, instancePositionBuffer);
     glVertexAttribDivisor(instancePositionLocation, 1);
@@ -145,11 +145,13 @@ int main(int argc, char **argv) {
     // 描画処理
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PRIMITIVE_RESTART);
+    glEnable(GL_CULL_FACE);
     glPrimitiveRestartIndex(0xff);
+    glUseProgram(shaderProgram);
     glBindVertexArray(vao);
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-        glDrawElementsInstanced(GL_TRIANGLE_FAN, 11, GL_UNSIGNED_BYTE, 0, instanceNumber);
+        glDrawElementsInstanced(GL_TRIANGLE_FAN, 13, GL_UNSIGNED_BYTE, 0, instanceNumber);
         glFinish();
         glfwSwapBuffers(window);
         glfwPollEvents();
