@@ -33,8 +33,24 @@ void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte rest
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
         sizeof(GLbyte) * 13, indices, GL_STATIC_DRAW);
 }
-std::unique_ptr<GLfloat[]> create3elementsData(const GLfloat start, const GLfloat end, const int size) {
-    return nullptr;
+std::unique_ptr<GLfloat[]> create3dData(const int size, const GLfloat max, const GLfloat offset = 0.0f) {
+    const int number = size * size * size;
+    std::unique_ptr<GLfloat[]> data(new GLfloat[number * 3]);
+    const GLfloat step = max / (size + 1);
+    std::unique_ptr<GLfloat[]> ruler(new GLfloat[size]);
+    for (int i = 0; i < size; ++i) {
+        ruler[i] = step * (i + 1) + offset;
+    }
+    for (int i = 0; i < size; ++i) {
+        for (int j = 0; j < size; ++j) {
+            for (int k = 0; k < size; ++k) {
+                data[(i*size*size + j*size + k) * 3 + 0] = ruler[k];
+                data[(i*size*size + j*size + k) * 3 + 1] = ruler[j];
+                data[(i*size*size + j*size + k) * 3 + 2] = ruler[i];
+            }
+        }
+    }
+    return data;
 }
 void createInstanceData(GLuint &positionsVBO, GLuint &colorsVBO, const int size) {
     const int number = size * size * size;
@@ -42,53 +58,12 @@ void createInstanceData(GLuint &positionsVBO, GLuint &colorsVBO, const int size)
     glGenBuffers(2, vbo);
     positionsVBO = vbo[0];
     colorsVBO = vbo[1];
-    std::unique_ptr<GLfloat[]> positions(new GLfloat[number * 3]);
-    const GLfloat positionStep = 2.0f / (size + 1);
-    std::unique_ptr<GLfloat[]> positionRuler(new GLfloat[size]);
-    for (int i = 0; i < size; ++i) {
-        positionRuler[i] = -1.0f + positionStep * (i + 1);
-    }
-    for (int i = 0; i < size; ++i) {
-        std::cout << positionRuler[i] << std::endl;
-    }
-    for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-            for (int k = 0; k < size; ++k) {
-                positions[(i*size*size + j*size + k) * 3 + 0] = positionRuler[k];
-                positions[(i*size*size + j*size + k) * 3 + 1] = positionRuler[j];
-                positions[(i*size*size + j*size + k) * 3 + 2] = positionRuler[i];
-            }
-        }
-    }
-    for (int i = 0; i < number * 3; i += 3) {
-        std::cout
-            << positions[i + 0] << ", "
-            << positions[i + 1] << ", "
-            << positions[i + 2] << ", "
-            << std::endl;
-    }
+    auto positions = create3dData(size, 2.0f, -1.0f);
     glBindBuffer(GL_ARRAY_BUFFER, positionsVBO);
     glBufferData(GL_ARRAY_BUFFER,
         sizeof(GLfloat) * number * 3, positions.get(), GL_STATIC_DRAW);
 
-    std::unique_ptr<GLfloat[]> colors(new GLfloat[number * 3]);
-    const GLfloat colorStep = 1.0f / (size + 1);
-    std::unique_ptr<GLfloat[]> colorRuler(new GLfloat[size]);
-    for (int i = 0; i < size; ++i) {
-        colorRuler[i] = colorStep * (i + 1);
-    }
-    for (int i = 0; i < size; ++i) {
-        std::cout << colorRuler[i] << std::endl;
-    }
-    for (int i = 0; i < size; ++i) {
-        for (int j = 0; j < size; ++j) {
-            for (int k = 0; k < size; ++k) {
-                colors[(i*size*size + j*size + k) * 3 + 0] = colorRuler[k];
-                colors[(i*size*size + j*size + k) * 3 + 1] = colorRuler[j];
-                colors[(i*size*size + j*size + k) * 3 + 2] = colorRuler[i];
-            }
-        }
-    }
+    auto colors = create3dData(size, 1.0f);
     glBindBuffer(GL_ARRAY_BUFFER, colorsVBO);
     glBufferData(GL_ARRAY_BUFFER,
         sizeof(GLfloat) * number * 3, colors.get(), GL_STATIC_DRAW);
