@@ -105,6 +105,20 @@ namespace suika {
             }
             return program;
         }
+        GLuint makeProgram(const string &vertexShaderFileName,
+                           const string &fragmentShaderFileName) {
+            if (vertexShaderFileName == "") {
+                return 0;
+            }
+            vector<ShaderSource> shaderSources;
+            shaderSources.push_back(readShaderSource(
+                GL_VERTEX_SHADER, vertexShaderFileName));
+            if (fragmentShaderFileName != "") {
+                shaderSources.push_back(readShaderSource(
+                    GL_FRAGMENT_SHADER, fragmentShaderFileName));
+            }
+            return createShaderProgram(shaderSources);
+        }
         shared_ptr<GLchar> getShaderInfoLog(GLuint shader) {
             GLsizei logLength;
             glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &logLength);

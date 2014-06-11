@@ -29,6 +29,8 @@ namespace suika {
             const std::string &name = "");
         // 複数のShaderSourceをコンパイルおよびリンクしてプログラムを作成する。
         GLuint createShaderProgram(const std::vector<ShaderSource> &sources);
+        GLuint makeProgram(const std::string &vertexShaderFileName,
+            const std::string &fragmentShaderFileName = "");
         std::shared_ptr<GLchar> getShaderInfoLog(GLuint shader);
         std::shared_ptr<GLchar> getProgramInfoLog(GLuint program);
     }
