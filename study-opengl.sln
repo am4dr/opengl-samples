@@ -20,7 +20,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "transform_feedback", "trans
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "instancing", "instancing\instancing.vcxproj", "{EF9D4840-1AD5-4F5C-9249-C1C3800E6C63}"
 EndProject
+<<<<<<< HEAD
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "texture", "texture\texture.vcxproj", "{CD4E246F-D426-4809-9EA3-6C53F3CC0410}"
+=======
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "envmap", "envmap\envmap.vcxproj", "{839052BA-3F48-4001-833E-4B768818BAA8}"
+>>>>>>> 経過保留。背景用のVAOを作成するまで実装。
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -94,6 +98,7 @@ Global
 		{EF9D4840-1AD5-4F5C-9249-C1C3800E6C63}.Release|Win32.ActiveCfg = Release|Win32
 		{EF9D4840-1AD5-4F5C-9249-C1C3800E6C63}.Release|Win32.Build.0 = Release|Win32
 		{EF9D4840-1AD5-4F5C-9249-C1C3800E6C63}.Release|x64.ActiveCfg = Release|Win32
+<<<<<<< HEAD
 		{CD4E246F-D426-4809-9EA3-6C53F3CC0410}.Debug MX|Win32.ActiveCfg = Debug|Win32
 		{CD4E246F-D426-4809-9EA3-6C53F3CC0410}.Debug MX|Win32.Build.0 = Debug|Win32
 		{CD4E246F-D426-4809-9EA3-6C53F3CC0410}.Debug MX|x64.ActiveCfg = Debug|Win32
@@ -106,6 +111,20 @@ Global
 		{CD4E246F-D426-4809-9EA3-6C53F3CC0410}.Release|Win32.ActiveCfg = Release|Win32
 		{CD4E246F-D426-4809-9EA3-6C53F3CC0410}.Release|Win32.Build.0 = Release|Win32
 		{CD4E246F-D426-4809-9EA3-6C53F3CC0410}.Release|x64.ActiveCfg = Release|Win32
+=======
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Debug MX|Win32.ActiveCfg = Debug|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Debug MX|Win32.Build.0 = Debug|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Debug MX|x64.ActiveCfg = Debug|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Debug|Win32.ActiveCfg = Debug|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Debug|Win32.Build.0 = Debug|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Debug|x64.ActiveCfg = Debug|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Release MX|Win32.ActiveCfg = Release|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Release MX|Win32.Build.0 = Release|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Release MX|x64.ActiveCfg = Release|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Release|Win32.ActiveCfg = Release|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Release|Win32.Build.0 = Release|Win32
+		{839052BA-3F48-4001-833E-4B768818BAA8}.Release|x64.ActiveCfg = Release|Win32
+>>>>>>> 経過保留。背景用のVAOを作成するまで実装。
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
