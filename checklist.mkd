@@ -1,0 +1,85 @@
+
+## プロジェクトについて
+
+- README.mkdの各プロジェクトの説明を書く
+
+    各プロジェクトへリンクを張るようにする。
+
+- 各プロジェクトのルートに何をするものかを書いたREADME.mkdを作る
+
+- プロジェクトのディレクトリ階層を考え直したい。
+
+
+## 各プロジェクトについて
+
+- 全般
+
+    GLFWの終了処理くらいはいれるべきか？
+
+        glfwDestroyWindow(window);
+        glfwTerminate();
+
+- blank_window
+
+    ウィンドウの作成などをsuikaに書き出そうかと思ったが、GLFWの練習も兼ねているサンプルなのでこれはこのままで良い。
+
+- instancing
+
+    - createProgram()
+
+        suikaの関数をつかう。
+
+            GLuint
+            suika::shader::makeProgram(
+                const std::string &vertexShaderFileName,
+                const std::string &fragmentShaderFileName = "");
+
+    - createModelData()
+
+        関数内で配列として宣言しているので、`sizeof(<配列名>)`でよいのではないか。
+
+    - main()
+
+        WindowSizeCallbackは使いまわせるのでsuikaにいれる。
+
+- texture
+        
+    忘れていたが、三角形の数を指定できるふりをして1個までしかできないので修正する。最初の予定通り三角形の個数を指定してランダムに生成するか、仮に実装しているように固定にするかで悩ましい。
+
+    - createTriangleVAO()
+
+        三角形の個数を指定しても`bufferSize`が固定になっているので注意する。頂点データを固定にするなら、`sizeof(<配列名>)`で個数を指定して自動生成するなら`sizeof(GLfloat) * triangleNumber * 3 * 2`となると思う。
+
+    - createTextureBuffer()
+
+        `TEXTURE0`なので`glTex*()`を使うのはメモ。
+
+    - main()
+
+        WindowSizeCallbackはsuikaのを使う。
+        個数を指定するか固定するかを注意。
+
+- transform_feedback
+
+    - `using namespace std;`してもいい。
+    - 一度フィードバック用のバッファに書き込んでから描画用のバッファにコピーしているが、描画用のバッファに直接フィードバックを書き込む方法でもよいかも。コピー処理を省ける。
+    - 背景の描画は本質に関係ないので削除する。
+
+    - main()
+
+        - WindowSizeCallbackはsuikaのものを使用する。
+        - VAOとVBOの処理の切り分け。
+        - 特に意図していないはずなのでシェーダのソースは別ファイルにして`suika::shader::makeProgram`で読み込む。
+        - `glUseProgram()`は必要か？
+
+- triangle
+
+    文字コードがsjisで改行がdosなので、他のものにあわせて変更したいところ。
+
+    - init()
+
+        - VAOとVBOを切り分ける。
+        - suikaに`makeProgram()`をオーバーロードしたものを作って使う。
+        - `glBindVertexArray(0);`
+
+
