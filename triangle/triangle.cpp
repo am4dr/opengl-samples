@@ -1,5 +1,4 @@
 #pragma comment(lib, "opengl32")
-#include <iostream>
 #include "../suika/suika.h"
 using namespace std;
 
