@@ -38,6 +38,7 @@ namespace suika {
     std::string readFile(const std::string &filename);
     namespace glfw {
         void error_callback(int, const char *);
+        void centeredMaximizedSquareViewport(GLFWwindow *window, int width, int height);
         // ひとつのウィンドウとコンテキストを使用する際に記述を省略する関数
         // 引数debugにより、デバッグ用のコンテキストを作成するかを選択できる。
         // 次のことを行う。

@@ -27,6 +27,12 @@ namespace suika {
         void error_callback(int error, const char *description){
             cerr << description << endl;
         }
+        void centeredMaximizedSquareViewport(GLFWwindow *window, int width, int height) {
+            int viewportSize = min(width, height);
+            int widthPadding = max((width - viewportSize) / 2, 0);
+            int heightPadding = max((height - viewportSize) / 2, 0);
+            glViewport(widthPadding, heightPadding, viewportSize, viewportSize);
+        }
         GLFWwindow *initializeWindowAndContext(int width, int height,
             const char* title, GLFWmonitor* monitor, GLFWwindow* share, bool debug) {
             glfwSetErrorCallback(&suika::glfw::error_callback);
