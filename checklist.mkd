@@ -82,4 +82,8 @@
         - suikaに`makeProgram()`をオーバーロードしたものを作って使う。
         - `glBindVertexArray(0);`
 
+    - main()
+
+        - vboは持っておく必要がないかも。
+        - viewportは共通のものを使用する。
 
