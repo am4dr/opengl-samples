@@ -21,10 +21,10 @@ void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte rest
     };
     glBindBuffer(GL_ARRAY_BUFFER, verticesVBO);
     glBufferData(GL_ARRAY_BUFFER,
-        sizeof(GLfloat) * 3 * 6, vertices, GL_STATIC_DRAW);
+        sizeof(vertices), vertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesVBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-        sizeof(GLbyte) * 13, indices, GL_STATIC_DRAW);
+        sizeof(indices), indices, GL_STATIC_DRAW);
 }
 // 3次元空間上の格子の交点の座標を順につめた配列を返す関数
 // 座標の各成分は[offset, max + offset]の値をとる。
@@ -52,7 +52,7 @@ std::unique_ptr<GLfloat[]> create3dData(const int size, const GLfloat max, const
     return data;
 }
 // インスタンスごとに設定する座標と色を格納するバッファを作成して名前を返す関数
-// 座標は空間の中心からの相対位置
+// 座標は空間の中心からの相対位置。
 void createInstanceData(GLuint &positionsVBO, GLuint &colorsVBO, const int size) {
     const int number = size * size * size;
     GLuint vbo[2];
