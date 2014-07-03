@@ -2,14 +2,6 @@
 #include "../suika/suika.h"
 #include <iostream>
 
-GLuint createProgram() {
-    std::vector<suika::shader::ShaderSource> shaderSources;
-    shaderSources.push_back(suika::shader::readShaderSource(
-        GL_VERTEX_SHADER, "instancing.vert", "instancing_vert"));
-    shaderSources.push_back(suika::shader::readShaderSource(
-        GL_FRAGMENT_SHADER, "instancing.frag", "instancing_frag"));
-    return suika::shader::createShaderProgram(shaderSources);
-}
 void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte restartMarker) {
     GLuint vbo[2];
     glGenBuffers(2, vbo);
@@ -79,7 +71,7 @@ int main(int argc, char **argv) {
         int heightPadding = std::max((height - viewportSize) / 2, 0);
         glViewport(widthPadding, heightPadding, viewportSize, viewportSize);
     });
-    GLuint shaderProgram = createProgram();
+    GLuint shaderProgram = suika::shader::makeProgram("instancing.vert", "instancing.frag");
     // インスタンス化するモデルのデータをバッファに入れる
     GLuint modelVerticesBuffer;
     GLuint modelElementsIndicesBuffer;
