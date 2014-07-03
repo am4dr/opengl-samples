@@ -1,15 +1,8 @@
 #pragma comment(lib, "opengl32")
 #include "../suika/suika.h"
-#include <iostream>
 
-GLuint createProgram() {
-    std::vector<suika::shader::ShaderSource> shaderSources;
-    shaderSources.push_back(suika::shader::readShaderSource(
-        GL_VERTEX_SHADER, "instancing.vert", "instancing_vert"));
-    shaderSources.push_back(suika::shader::readShaderSource(
-        GL_FRAGMENT_SHADER, "instancing.frag", "instancing_frag"));
-    return suika::shader::createShaderProgram(shaderSources);
-}
+// 今回描画する八面体用の頂点座標とインデックス用のバッファを作成して名前を返す関数
+// restartMarkerにprimitive restart用の値を設定する。
 void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte restartMarker) {
     GLuint vbo[2];
     glGenBuffers(2, vbo);
@@ -28,11 +21,17 @@ void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte rest
     };
     glBindBuffer(GL_ARRAY_BUFFER, verticesVBO);
     glBufferData(GL_ARRAY_BUFFER,
-        sizeof(GLfloat) * 3 * 6, vertices, GL_STATIC_DRAW);
+        sizeof(vertices), vertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indicesVBO);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-        sizeof(GLbyte) * 13, indices, GL_STATIC_DRAW);
+        sizeof(indices), indices, GL_STATIC_DRAW);
 }
+// 3次元空間上の格子の交点の座標を順につめた配列を返す関数
+// 座標の各成分は[offset, max + offset]の値をとる。
+// sizeは格子の各辺の分割数。sizeの3乗個の座標が得られる。
+// maxは格子の各辺の長さ。
+// offsetに値を設定することで得られる座標の各成分にoffset分の値を加算する。
+//     x=y=zの直線の方向にoffset分平行移動する。
 std::unique_ptr<GLfloat[]> create3dData(const int size, const GLfloat max, const GLfloat offset = 0.0f) {
     const int number = size * size * size;
     std::unique_ptr<GLfloat[]> data(new GLfloat[number * 3]);
@@ -52,6 +51,8 @@ std::unique_ptr<GLfloat[]> create3dData(const int size, const GLfloat max, const
     }
     return data;
 }
+// インスタンスごとに設定する座標と色を格納するバッファを作成して名前を返す関数
+// 座標は空間の中心からの相対位置。
 void createInstanceData(GLuint &positionsVBO, GLuint &colorsVBO, const int size) {
     const int number = size * size * size;
     GLuint vbo[2];
@@ -72,18 +73,13 @@ int main(int argc, char **argv) {
     GLFWwindow *window =
         suika::glfw::initializeWindowAndContext(
         600, 600, "instancing", nullptr, nullptr, true);
-    glfwSetWindowSizeCallback(window,
-        [](GLFWwindow *window, int width, int height){
-        int viewportSize = std::min(width, height);
-        int widthPadding = std::max((width - viewportSize) / 2, 0);
-        int heightPadding = std::max((height - viewportSize) / 2, 0);
-        glViewport(widthPadding, heightPadding, viewportSize, viewportSize);
-    });
-    GLuint shaderProgram = createProgram();
+    glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
+    GLuint shaderProgram = suika::shader::makeProgram("instancing.vert", "instancing.frag");
     // インスタンス化するモデルのデータをバッファに入れる
     GLuint modelVerticesBuffer;
     GLuint modelElementsIndicesBuffer;
-    createModelData(modelVerticesBuffer, modelElementsIndicesBuffer, 0xff);
+    const GLubyte primitiveRestartIndex = 0xff;
+    createModelData(modelVerticesBuffer, modelElementsIndicesBuffer, primitiveRestartIndex);
     // インスタンスごとに設定するデータをバッファに入れる
     GLuint instancePositionBuffer;
     GLuint instanceColorBuffer;
@@ -121,7 +117,7 @@ int main(int argc, char **argv) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PRIMITIVE_RESTART);
     glEnable(GL_CULL_FACE);
-    glPrimitiveRestartIndex(0xff);
+    glPrimitiveRestartIndex(primitiveRestartIndex);
     glUseProgram(shaderProgram);
     glBindVertexArray(vao);
     while (!glfwWindowShouldClose(window)) {
