@@ -8,33 +8,6 @@ int main(int argc, char **argv) {
         suika::glfw::initializeWindowAndContext(
         initialSize, initialSize, "transform feedback", nullptr, nullptr, true);
     glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
-    GLuint backgroundVAO, backgroundVBO;
-    glGenVertexArrays(1, &backgroundVAO);
-    glBindVertexArray(backgroundVAO);
-    glGenBuffers(1, &backgroundVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, backgroundVBO);
-    GLfloat vertices[] = {
-        0.9f, 0.9f, -0.9f, 0.9f, -0.9f, -0.9f, 0.9f, -0.9f,
-    };
-    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-    std::vector<suika::shader::ShaderSource> backgroundSources;
-    backgroundSources.push_back(suika::shader::ShaderSource(GL_VERTEX_SHADER, std::string(
-        "#version 330 core\n"
-        "layout(location=0) in vec2 position;\n"
-        "\n"
-        "void main(void) {\n"
-        "   gl_Position = vec4(position, 0.0f, 1.0f);\n"
-        "}\n"), "background vertex shader"));
-    backgroundSources.push_back(suika::shader::ShaderSource(GL_FRAGMENT_SHADER, std::string(
-        "#version 330 core\n"
-        "layout(location=0) out vec4 color;"
-        "void main(void) {"
-        "   color = vec4(0.0f, 0.0f, 0.0f, 1.0f);"
-        "}"), "background fragment shader"));
-    GLuint backgroundProgram = suika::shader::createShaderProgram(backgroundSources);
-    glUseProgram(backgroundProgram);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
     
     std::vector<suika::shader::ShaderSource> particleSources;
     particleSources.push_back(suika::shader::ShaderSource(GL_VERTEX_SHADER, std::string(
@@ -116,10 +89,6 @@ int main(int argc, char **argv) {
     glClearColor(0.15f,0.15f,0.15f,1.0f);
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT);
-
-        glUseProgram(backgroundProgram);
-        glBindVertexArray(backgroundVAO);
-        glDrawArrays(GL_QUADS, 0, 4);
 
         glUseProgram(particleProgram);
         glBindVertexArray(particleVAO);
