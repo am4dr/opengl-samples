@@ -84,7 +84,8 @@ int main(int argc, char **argv) {
     // インスタンス化するモデルのデータをバッファに入れる
     GLuint modelVerticesBuffer;
     GLuint modelElementsIndicesBuffer;
-    createModelData(modelVerticesBuffer, modelElementsIndicesBuffer, 0xff);
+    const GLubyte primitiveRestartIndex = 0xff;
+    createModelData(modelVerticesBuffer, modelElementsIndicesBuffer, primitiveRestartIndex);
     // インスタンスごとに設定するデータをバッファに入れる
     GLuint instancePositionBuffer;
     GLuint instanceColorBuffer;
@@ -122,7 +123,7 @@ int main(int argc, char **argv) {
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_PRIMITIVE_RESTART);
     glEnable(GL_CULL_FACE);
-    glPrimitiveRestartIndex(0xff);
+    glPrimitiveRestartIndex(primitiveRestartIndex);
     glUseProgram(shaderProgram);
     glBindVertexArray(vao);
     while (!glfwWindowShouldClose(window)) {
