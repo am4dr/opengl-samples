@@ -67,13 +67,7 @@ int main(int argc, char** argv) {
     GLFWwindow *window =
         suika::glfw::initializeWindowAndContext(
         600, 600, "texture2D", nullptr, nullptr, true);
-    glfwSetWindowSizeCallback(window,
-        [](GLFWwindow *window, int width, int height){
-        int viewportSize = std::min(width, height);
-        int widthPadding = std::max((width - viewportSize) / 2, 0);
-        int heightPadding = std::max((height - viewportSize) / 2, 0);
-        glViewport(widthPadding, heightPadding, viewportSize, viewportSize);
-    });
+    glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
     GLuint program = suika::shader::makeProgram("texture.vert", "texture.frag");
     // 描画するプリミティブの頂点座標とテクスチャ座標を
     // 持つバッファを作成し、それを描画するための設定をもつVAOを作成
