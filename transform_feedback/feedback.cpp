@@ -1,6 +1,5 @@
 #pragma comment(lib, "opengl32")
 #include "../suika/suika.h"
-#include <cmath>
 
 int main(int argc, char **argv) {
     const int initialSize = 600;
