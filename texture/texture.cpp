@@ -1,12 +1,12 @@
 #pragma comment(lib, "opengl32")
 #include "../suika/suika.h"
 
-GLuint createTriangleVAO(const GLuint program, const GLuint triangleNumber) {
+GLuint createTriangleVAO(const GLuint program) {
     GLuint positionLocation = glGetAttribLocation(program, "position");
     GLuint texCoordLocation = glGetAttribLocation(program, "texCoord");
     // 頂点のattribute用の配列を確保
-    std::unique_ptr<GLfloat[]> positions(new GLfloat[triangleNumber * 3 * 2]);
-    std::unique_ptr<GLfloat[]> texCoords(new GLfloat[triangleNumber * 3 * 2]);
+    std::unique_ptr<GLfloat[]> positions(new GLfloat[3 * 2]);
+    std::unique_ptr<GLfloat[]> texCoords(new GLfloat[3 * 2]);
     // TODO 配列にデータを格納する
     static const GLfloat data[] = { 0.86f, 0.75f, -0.86f, 0.75f, 0.0f, -0.75f };
     for (int i = 0; i < 6; ++i) {
@@ -78,7 +78,7 @@ int main(int argc, char** argv) {
     // 描画するプリミティブの頂点座標とテクスチャ座標を
     // 持つバッファを作成し、それを描画するための設定をもつVAOを作成
     static const GLuint triangleNumber = 1;
-    GLuint triangleVAO = createTriangleVAO(program, triangleNumber);
+    GLuint triangleVAO = createTriangleVAO(program);
     // テクスチャの作成。今回はテクスチャひとつのみでTEXTURE0を使用。
     GLuint textureBuffer = createTextureBuffer();
     // 描画のための設定
