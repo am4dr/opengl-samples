@@ -11,10 +11,8 @@ int main(int argc, char **argv) {
     GLuint particleProgram = 
         suika::shader::makeProgram("transform_feedback.vert", "transform_feedback.frag");
     
-    GLuint particleVBO[2];
-    const GLuint &particlePositionVBO = particleVBO[0];
-    const GLuint &particleColorVBO = particleVBO[1];
-    glGenBuffers(2, particleVBO);
+    GLuint particlePositionVBO[2];
+    glGenBuffers(2, particlePositionVBO);
     const int numberOfParticles = initialSize * initialSize;
     auto particlePositions =
         std::unique_ptr<GLfloat[]>(new GLfloat[2*numberOfParticles]);
@@ -27,6 +25,8 @@ int main(int argc, char **argv) {
             particlePositions[2 * particleNumber + 1] = yValue;
         }
     }
+    GLuint particleColorVBO;
+    glGenBuffers(1, &particleColorVBO);
     auto particleColors =
         std::unique_ptr<GLfloat[]>(new GLfloat[numberOfParticles]);
     for (int i = 0; i < initialSize; ++i) {
@@ -37,51 +37,53 @@ int main(int argc, char **argv) {
                 4.0f * (x*x + y*y) / (initialSize*initialSize);
         }
     }
-    glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO[0]);
     glBufferData(GL_ARRAY_BUFFER,
         sizeof(GLfloat) * 2 * numberOfParticles, particlePositions.get(), GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO[1]);
+    glBufferData(GL_ARRAY_BUFFER,
+        sizeof(GLfloat) * 2 * numberOfParticles, nullptr, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, particleColorVBO);
     glBufferData(GL_ARRAY_BUFFER,
         sizeof(GLfloat) * numberOfParticles, particleColors.get(), GL_STATIC_DRAW);
 
-    GLuint particleVAO;
-    glGenVertexArrays(1, &particleVAO);
-    glBindVertexArray(particleVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    glBindBuffer(GL_ARRAY_BUFFER, particleColorVBO);
-    glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
-    glEnableVertexAttribArray(1);
+    GLuint particleVAO[2];
+    glGenVertexArrays(2, particleVAO);
+    for (int i = 0; i < 2; ++i) {
+        glBindVertexArray(particleVAO[i]);
+        glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO[i]);
+        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, particleColorVBO);
+        glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 0, 0);
+        glEnableVertexAttribArray(0);
+        glEnableVertexAttribArray(1);
+    }
     glBindVertexArray(0);
 
-    GLuint feedback;
-    glGenBuffers(1, &feedback);
-    glBindBuffer(GL_TRANSFORM_FEEDBACK_BUFFER, feedback);
-    glBufferData(GL_TRANSFORM_FEEDBACK_BUFFER,
-        sizeof(GLfloat)*2*numberOfParticles, nullptr, GL_STATIC_COPY);
     const char *varyings[] = { "newPosition" };
     glTransformFeedbackVaryings(particleProgram, 1, varyings, GL_INTERLEAVED_ATTRIBS);
     glLinkProgram(particleProgram);
 
     glClearColor(0.15f,0.15f,0.15f,1.0f);
+    glUseProgram(particleProgram);
+    int bufferNumber = 0;
     while (!glfwWindowShouldClose(window)) {
+        int nextBufferNumber = 1 - bufferNumber;
         glClear(GL_COLOR_BUFFER_BIT);
 
-        glUseProgram(particleProgram);
-        glBindVertexArray(particleVAO);
-        glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0, feedback);
+        glBindVertexArray(particleVAO[bufferNumber]);
+        // 今回描画に使用しないほうのバッファにfeedbackする
+        glBindBufferBase(GL_TRANSFORM_FEEDBACK_BUFFER, 0,
+            particlePositionVBO[nextBufferNumber]);
         glBeginTransformFeedback(GL_POINTS);
-        static bool flag = true;
         glDrawArrays(GL_POINTS, 0, numberOfParticles);
         glEndTransformFeedback();
-        glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO);
-        glCopyBufferSubData(GL_TRANSFORM_FEEDBACK_BUFFER, GL_ARRAY_BUFFER,
-            0, 0, sizeof(GLfloat)*2*numberOfParticles);
 
         glFinish();
         glfwSwapBuffers(window);
         glfwPollEvents();
+        // 描画するバッファの切り替え
+        bufferNumber = nextBufferNumber;
     }
 
     glfwDestroyWindow(window);
