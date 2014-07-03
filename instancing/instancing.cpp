@@ -1,6 +1,8 @@
 #pragma comment(lib, "opengl32")
 #include "../suika/suika.h"
 
+// 今回描画する八面体用の頂点座標とインデックス用のバッファを作成して名前を返す関数
+// restartMarkerにprimitive restart用の値を設定する。
 void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte restartMarker) {
     GLuint vbo[2];
     glGenBuffers(2, vbo);
@@ -24,6 +26,12 @@ void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte rest
     glBufferData(GL_ELEMENT_ARRAY_BUFFER,
         sizeof(GLbyte) * 13, indices, GL_STATIC_DRAW);
 }
+// 3次元空間上の格子の交点の座標を順につめた配列を返す関数
+// 座標の各成分は[offset, max + offset]の値をとる。
+// sizeは格子の各辺の分割数。sizeの3乗個の座標が得られる。
+// maxは格子の各辺の長さ。
+// offsetに値を設定することで得られる座標の各成分にoffset分の値を加算する。
+//     x=y=zの直線の方向にoffset分平行移動する。
 std::unique_ptr<GLfloat[]> create3dData(const int size, const GLfloat max, const GLfloat offset = 0.0f) {
     const int number = size * size * size;
     std::unique_ptr<GLfloat[]> data(new GLfloat[number * 3]);
@@ -43,6 +51,8 @@ std::unique_ptr<GLfloat[]> create3dData(const int size, const GLfloat max, const
     }
     return data;
 }
+// インスタンスごとに設定する座標と色を格納するバッファを作成して名前を返す関数
+// 座標は空間の中心からの相対位置
 void createInstanceData(GLuint &positionsVBO, GLuint &colorsVBO, const int size) {
     const int number = size * size * size;
     GLuint vbo[2];
