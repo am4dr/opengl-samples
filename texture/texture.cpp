@@ -7,11 +7,11 @@ GLuint createTriangleVAO(const GLuint program) {
     // 頂点のattribute用の配列を確保
     std::unique_ptr<GLfloat[]> positions(new GLfloat[3 * 2]);
     std::unique_ptr<GLfloat[]> texCoords(new GLfloat[3 * 2]);
-    // TODO 配列にデータを格納する
+    // 配列にデータを格納する
     static const GLfloat data[] = { 0.86f, 0.75f, -0.86f, 0.75f, 0.0f, -0.75f };
     for (int i = 0; i < 6; ++i) {
         positions[i] = data[i];
-        texCoords[i] = data[i] / 2 + 0.5f;
+        texCoords[i] = data[i] / 2;
     }
     // バッファを作って入れる
     GLuint vbo;
