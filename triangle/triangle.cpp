@@ -63,16 +63,14 @@ int main(int argc, char** argv) {
     GLFWwindow *window = 
         suika::glfw::initializeWindowAndContext(
             480, 480, "triangle", nullptr, nullptr, true);
+    glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
 
     GLuint vao = initVAO();
     glBindVertexArray(vao);
     GLuint program = createProgram();
     glUseProgram(program);
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
-    int width, height;
     while (!glfwWindowShouldClose(window)) {
-        glfwGetWindowSize(window, &width, &height);
-        glViewport(0, 0, width, height);
         glClear(GL_COLOR_BUFFER_BIT);
 
         glDrawArrays(GL_TRIANGLES, 0, 6);
