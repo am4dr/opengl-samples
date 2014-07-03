@@ -74,7 +74,7 @@ int main(int argc, char** argv) {
     static const GLuint triangleNumber = 1;
     GLuint triangleVAO = createTriangleVAO(program);
     // テクスチャの作成。今回はテクスチャひとつのみでTEXTURE0を使用。
-    GLuint textureBuffer = createTextureBuffer();
+    createTextureBuffer();
     // 描画のための設定
     glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
     glUseProgram(program);
