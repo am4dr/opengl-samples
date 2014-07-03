@@ -73,13 +73,7 @@ int main(int argc, char **argv) {
     GLFWwindow *window =
         suika::glfw::initializeWindowAndContext(
         600, 600, "instancing", nullptr, nullptr, true);
-    glfwSetWindowSizeCallback(window,
-        [](GLFWwindow *window, int width, int height){
-        int viewportSize = std::min(width, height);
-        int widthPadding = std::max((width - viewportSize) / 2, 0);
-        int heightPadding = std::max((height - viewportSize) / 2, 0);
-        glViewport(widthPadding, heightPadding, viewportSize, viewportSize);
-    });
+    glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
     GLuint shaderProgram = suika::shader::makeProgram("instancing.vert", "instancing.frag");
     // インスタンス化するモデルのデータをバッファに入れる
     GLuint modelVerticesBuffer;
