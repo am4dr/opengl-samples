@@ -11,9 +11,6 @@ int main(int argc, char **argv) {
     GLuint particleProgram = 
         suika::shader::makeProgram("transform_feedback.vert", "transform_feedback.frag");
     
-    GLuint particleVAO;
-    glGenVertexArrays(1, &particleVAO);
-    glBindVertexArray(particleVAO);
     GLuint particleVBO[2];
     const GLuint &particlePositionVBO = particleVBO[0];
     const GLuint &particleColorVBO = particleVBO[1];
@@ -43,13 +40,20 @@ int main(int argc, char **argv) {
     glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO);
     glBufferData(GL_ARRAY_BUFFER,
         sizeof(GLfloat) * 2 * numberOfParticles, particlePositions.get(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, particleColorVBO);
     glBufferData(GL_ARRAY_BUFFER,
         sizeof(GLfloat) * numberOfParticles, particleColors.get(), GL_STATIC_DRAW);
+
+    GLuint particleVAO;
+    glGenVertexArrays(1, &particleVAO);
+    glBindVertexArray(particleVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, particlePositionVBO);
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, particleColorVBO);
     glVertexAttribPointer(1, 1, GL_FLOAT, GL_FALSE, 0, 0);
+    glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glBindVertexArray(0);
 
     GLuint feedback;
     glGenBuffers(1, &feedback);
