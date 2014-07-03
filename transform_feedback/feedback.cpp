@@ -11,7 +11,6 @@ int main(int argc, char **argv) {
     GLuint particleProgram = 
         suika::shader::makeProgram("transform_feedback.vert", "transform_feedback.frag");
     
-    glUseProgram(particleProgram);
     GLuint particleVAO;
     glGenVertexArrays(1, &particleVAO);
     glBindVertexArray(particleVAO);
