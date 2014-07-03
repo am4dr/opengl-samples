@@ -1,6 +1,5 @@
 #pragma comment(lib, "opengl32")
 #include "../suika/suika.h"
-#include <iostream>
 
 void createModelData(GLuint &verticesVBO, GLuint &indicesVBO, const GLubyte restartMarker) {
     GLuint vbo[2];
