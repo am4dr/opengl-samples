@@ -1,5 +1,6 @@
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 #include "suika.h"
 using namespace std;
 
