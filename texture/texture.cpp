@@ -1,4 +1,4 @@
-#include "../suika/suika.h"
+#include <suika.h>
 
 GLuint createTriangleVAO(const GLuint program) {
     GLuint positionLocation = glGetAttribLocation(program, "position");

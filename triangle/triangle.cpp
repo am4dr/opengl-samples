@@ -1,4 +1,4 @@
-#include "../suika/suika.h"
+#include <suika.h>
 using namespace std;
 
 GLuint initVAO() {

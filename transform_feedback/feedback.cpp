@@ -1,4 +1,4 @@
-#include "../suika/suika.h"
+#include <suika.h>
 
 int main(int argc, char **argv) {
     const int initialSize = 600;
