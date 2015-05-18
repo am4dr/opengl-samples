@@ -1,4 +1,3 @@
-#pragma comment(lib, "opengl32")
 #include "../suika/suika.h"
 
 // 今回描画する八面体用の頂点座標とインデックス用のバッファを作成して名前を返す関数

@@ -1,4 +1,3 @@
-#pragma comment(lib, "opengl32")
 #include "../suika/suika.h"
 
 int main(int argc, char **argv) {

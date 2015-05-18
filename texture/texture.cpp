@@ -1,4 +1,3 @@
-#pragma comment(lib, "opengl32")
 #include "../suika/suika.h"
 
 GLuint createTriangleVAO(const GLuint program) {
