@@ -1,6 +1,6 @@
-project(blank_window)
+project(transform_feedback)
 
-FILE(GLOB ${PROJECT_NAME}_SOURCES "*.cpp")
+file(GLOB ${PROJECT_NAME}_SOURCES "*.cpp")
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
 target_link_libraries(${PROJECT_NAME}
     PRIVATE ${LIBRARIES_TO_LINK}

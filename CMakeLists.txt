@@ -1,12 +1,42 @@
+cmake_minimum_required(VERSION 3.2)
 project(study-opengl)
 
-cmake_minimum_required(VERSION 2.8)
+# libraries
+set(LIBRARY_BUILD_DIR ${CMAKE_CURRENT_BINARY_DIR}/libuild)
+add_definitions(-DGLEW_STATIC)
+add_subdirectory(libs/glew-cmake ${LIBRARY_BUILD_DIR}/glew-cmake)
+set(GLEW_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs/glew-cmake/include)
 
-# GLFW
-add_subdirectory(libs/glfw)
-include_directories(libs/glfw/include)
-# target_link_libraries(myapp glfw ${GLFW_LIBRARIES})
+option(GLFW_BUILD_EXAMPLES OFF)
+option(GLFW_BUILD_TESTS OFF)
+option(GLFW_BUILD_DOCS OFF)
+add_subdirectory(libs/glfw ${LIBRARY_BUILD_DIR}/glfw)
+set(GLFW_INCLUDE_DIR ${GLFW_SOURCE_DIR}/include)
 
-set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
+add_subdirectory(suika ${LIBRARY_BUILD_DIR}/suika)
+
+set(LIBRARIES_TO_LINK
+    libglew_static
+    #libglew_shared
+    glfw
+    suika
+)
+
+# includes
+include_directories(
+    ${GLEW_INCLUDE_DIR}
+    ${GLFW_INCLUDE_DIR}
+    ${SUIKA_INCLUDE_DIR}
+)
+
+# executable
+if (CMAKE_COMPILER_IS_GNUCXX)
+    add_compile_options("-std=c++11")
+endif()
 add_subdirectory(blank_window)
+add_subdirectory(triangle)
+add_subdirectory(texture)
+add_subdirectory(instancing)
+add_subdirectory(transform_feedback)
+
 
