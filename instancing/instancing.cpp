@@ -73,7 +73,7 @@ int main(int argc, char **argv) {
         suika::glfw::initializeWindowAndContext(
         600, 600, "instancing", nullptr, nullptr, true);
     glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
-    GLuint shaderProgram = suika::shader::makeProgram("instancing.vert", "instancing.frag");
+    GLuint shaderProgram = suika::shader::makeProgram("instancing_vert.glsl", "instancing_frag.glsl");
     // インスタンス化するモデルのデータをバッファに入れる
     GLuint modelVerticesBuffer;
     GLuint modelElementsIndicesBuffer;
