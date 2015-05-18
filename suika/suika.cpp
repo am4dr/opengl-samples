@@ -51,9 +51,11 @@ namespace suika {
     }
     namespace gl {
         void APIENTRY debug_message_callback(GLenum source, GLenum type, GLuint id,
-            GLenum severity, GLsizei length, const GLchar* message, GLvoid* userParam) {
+            GLenum severity, GLsizei length, const GLchar* message, const GLvoid* userParam) {
             ostream &out =
-                userParam != nullptr ? *static_cast<ostream *>(userParam) : std::cerr;
+                userParam == nullptr ?
+                    std::cerr : 
+                        *static_cast<ostream *>(const_cast<GLvoid *>(userParam));
             out << "message: " << message << std::endl;
         }
     }
