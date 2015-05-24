@@ -21,6 +21,7 @@ set(LIBRARIES_TO_LINK
     libglew_static
     #libglew_shared
     glfw
+    ${GLFW_LIBRARIES}
     suika
 )
 
