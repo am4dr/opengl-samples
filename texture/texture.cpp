@@ -1,5 +1,4 @@
-#pragma comment(lib, "opengl32")
-#include "../suika/suika.h"
+#include <suika.h>
 
 GLuint createTriangleVAO(const GLuint program) {
     GLuint positionLocation = glGetAttribLocation(program, "position");
@@ -68,7 +67,7 @@ int main(int argc, char** argv) {
         suika::glfw::initializeWindowAndContext(
         600, 600, "texture2D", nullptr, nullptr, true);
     glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
-    GLuint program = suika::shader::makeProgram("texture.vert", "texture.frag");
+    GLuint program = suika::shader::makeProgram("texture_vert.glsl", "texture_frag.glsl");
     // 描画するプリミティブの頂点座標とテクスチャ座標を
     // 持つバッファを作成し、それを描画するための設定をもつVAOを作成
     static const GLuint triangleNumber = 1;

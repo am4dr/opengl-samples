@@ -1,5 +1,4 @@
-#pragma comment(lib, "opengl32")
-#include "../suika/suika.h"
+#include <suika.h>
 
 int main(int argc, char **argv) {
     const int initialSize = 600;
@@ -8,7 +7,7 @@ int main(int argc, char **argv) {
         initialSize, initialSize, "transform feedback", nullptr, nullptr, true);
     glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
     GLuint particleProgram = 
-        suika::shader::makeProgram("transform_feedback.vert", "transform_feedback.frag");
+        suika::shader::makeProgram("transform_feedback_vert.glsl", "transform_feedback_frag.glsl");
     
     GLuint particlePositionVBO[2];
     glGenBuffers(2, particlePositionVBO);

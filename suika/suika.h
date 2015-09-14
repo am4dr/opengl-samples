@@ -53,7 +53,7 @@ namespace suika {
     namespace gl {
         void APIENTRY debug_message_callback(GLenum source, GLenum type,
             GLuint id, GLenum severity, GLsizei length, const GLchar* message,
-            GLvoid* userParam = nullptr);
+            const GLvoid* userParam = nullptr);
     }
 }
 #endif // INCLUDE_GUARD_AMADARE_SUIKA_20140430

@@ -1,5 +1,4 @@
-#pragma comment(lib, "opengl32")
-#include "../suika/suika.h"
+#include <suika.h>
 using namespace std;
 
 GLuint initVAO() {
@@ -41,7 +40,7 @@ GLuint initVAO() {
 GLuint createProgram() {
     vector<suika::shader::ShaderSource> shaderSources;
     shaderSources.push_back(
-        suika::shader::readShaderSource(GL_VERTEX_SHADER, "triangles.vert"));
+        suika::shader::readShaderSource(GL_VERTEX_SHADER, "triangles_vert.glsl"));
     // ソースコードを直接書いた場合のテスト
     shaderSources.push_back(suika::shader::ShaderSource(GL_FRAGMENT_SHADER, string(
         "#version 430 core\n"

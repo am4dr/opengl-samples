@@ -1,5 +1,4 @@
-#pragma comment(lib, "opengl32")
-#include "../suika/suika.h"
+#include <suika.h>
 
 // 今回描画する八面体用の頂点座標とインデックス用のバッファを作成して名前を返す関数
 // restartMarkerにprimitive restart用の値を設定する。
@@ -74,7 +73,7 @@ int main(int argc, char **argv) {
         suika::glfw::initializeWindowAndContext(
         600, 600, "instancing", nullptr, nullptr, true);
     glfwSetWindowSizeCallback(window, suika::glfw::centeredMaximizedSquareViewport);
-    GLuint shaderProgram = suika::shader::makeProgram("instancing.vert", "instancing.frag");
+    GLuint shaderProgram = suika::shader::makeProgram("instancing_vert.glsl", "instancing_frag.glsl");
     // インスタンス化するモデルのデータをバッファに入れる
     GLuint modelVerticesBuffer;
     GLuint modelElementsIndicesBuffer;
