@@ -6,11 +6,12 @@ if (CMAKE_COMPILER_IS_GNUCXX)
 endif()
 add_library(suika suika.cpp suika.h)
 target_link_libraries(suika
-    PRIVATE
+    PUBLIC
+        gl3w
         glfw
 )
 target_include_directories(suika
-    PRIVATE
+    PUBLIC
         ${GLFW_INCLUDE_DIR}
 )
 set(SUIKA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)

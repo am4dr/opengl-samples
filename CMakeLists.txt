@@ -4,6 +4,8 @@ set(CMAKE_CXX_COMPILER g++)
 project(study-opengl)
 
 # libraries
+add_subdirectory(libs/gl3w)
+
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
 option(GLFW_BUILD_DOCS OFF)
