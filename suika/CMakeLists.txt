@@ -15,5 +15,5 @@ target_include_directories(suika
         ${glfw_INCLUDE_DIR}
         ${CMAKE_CURRENT_LIST_DIR}
 )
-#set(SUIKA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
 
+install(FILES $<TARGET_FILE:${PROJECT_NAME}> DESTINATION "bin")
