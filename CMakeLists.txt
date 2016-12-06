@@ -9,21 +9,12 @@ add_subdirectory(libs/gl3w)
 option(GLFW_BUILD_EXAMPLES OFF)
 option(GLFW_BUILD_TESTS OFF)
 option(GLFW_BUILD_DOCS OFF)
-add_subdirectory(libs/glfw ${LIBRARY_BUILD_DIR}/glfw)
-set(GLFW_INCLUDE_DIR ${GLFW_SOURCE_DIR}/include)
+add_subdirectory(libs/glfw)
 
-add_subdirectory(suika ${LIBRARY_BUILD_DIR}/suika)
+add_subdirectory(suika)
 
 set(LIBRARIES_TO_LINK
-    glfw
-    ${GLFW_LIBRARIES}
     suika
-)
-
-# includes
-include_directories(
-    ${GLFW_INCLUDE_DIR}
-    ${SUIKA_INCLUDE_DIR}
 )
 
 # executable

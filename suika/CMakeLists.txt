@@ -12,7 +12,8 @@ target_link_libraries(suika
 )
 target_include_directories(suika
     PUBLIC
-        ${GLFW_INCLUDE_DIR}
+        ${glfw_INCLUDE_DIR}
+        ${CMAKE_CURRENT_LIST_DIR}
 )
-set(SUIKA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
+#set(SUIKA_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR} PARENT_SCOPE)
 
