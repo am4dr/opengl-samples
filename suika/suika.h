@@ -1,10 +1,10 @@
 #ifndef INCLUDE_GUARD_AMADARE_SUIKA_20140430
 #define INCLUDE_GUARD_AMADARE_SUIKA_20140430
 /*
-Ql:
+ï¿½Qï¿½l:
     https://www.opengl.org/wiki_132/index.php?title=GLSL_Object&printable=yes
 */
-#include <GL/glew.h>
+#include <GL/gl3w.h>
 #include <GLFW/glfw3.h>
 #include <string>
 #include <vector>
@@ -12,7 +12,7 @@
 
 namespace suika {
     namespace shader {
-        // ƒVƒF[ƒ_‚Ìí—Ş‚ÆƒVƒF[ƒ_‚Ìƒ\[ƒX‚ÆƒVƒF[ƒ_‚Ì–¼‘O‚ğ‚ÂŒ^
+        // ï¿½Vï¿½Fï¿½[ï¿½_ï¿½Ìï¿½ï¿½Ş‚ÆƒVï¿½Fï¿½[ï¿½_ï¿½Ìƒ\ï¿½[ï¿½Xï¿½ÆƒVï¿½Fï¿½[ï¿½_ï¿½Ì–ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ÂŒ^
         class ShaderSource {
             GLenum type;
             std::string source;
@@ -24,28 +24,28 @@ namespace suika {
             const std::string &getSource() const;
             const std::string &getName() const;
         };
-        // ƒVƒF[ƒ_‚Ìƒ\[ƒXƒtƒ@ƒCƒ‹‚©‚çShaderSource‚ğì¬‚·‚éB
+        // ï¿½Vï¿½Fï¿½[ï¿½_ï¿½Ìƒ\ï¿½[ï¿½Xï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ShaderSourceï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ï¿½ï¿½B
         ShaderSource readShaderSource(GLenum type, const std::string &filename,
             const std::string &name = "");
-        // •¡”‚ÌShaderSource‚ğƒRƒ“ƒpƒCƒ‹‚¨‚æ‚ÑƒŠƒ“ƒN‚µ‚ÄƒvƒƒOƒ‰ƒ€‚ğì¬‚·‚éB
+        // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ShaderSourceï¿½ï¿½ï¿½Rï¿½ï¿½ï¿½pï¿½Cï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñƒï¿½ï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½Äƒvï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½ï¿½ï¿½B
         GLuint createShaderProgram(const std::vector<ShaderSource> &sources);
         GLuint makeProgram(const std::string &vertexShaderFileName,
             const std::string &fragmentShaderFileName = "");
         std::shared_ptr<GLchar> getShaderInfoLog(GLuint shader);
         std::shared_ptr<GLchar> getProgramInfoLog(GLuint program);
     }
-    // ƒtƒ@ƒCƒ‹‚Ì“à—e‚ğstring‚Æ‚µ‚Ä•Ô‚·
+    // ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì“ï¿½ï¿½eï¿½ï¿½stringï¿½Æ‚ï¿½ï¿½Ä•Ô‚ï¿½
     std::string readFile(const std::string &filename);
     namespace glfw {
         void error_callback(int, const char *);
         void centeredMaximizedSquareViewport(GLFWwindow *window, int width, int height);
-        // ‚Ğ‚Æ‚Â‚ÌƒEƒBƒ“ƒhƒE‚ÆƒRƒ“ƒeƒLƒXƒg‚ğg—p‚·‚éÛ‚É‹Lq‚ğÈ—ª‚·‚éŠÖ”
-        // ˆø”debug‚É‚æ‚èAƒfƒoƒbƒO—p‚ÌƒRƒ“ƒeƒLƒXƒg‚ğì¬‚·‚é‚©‚ğ‘I‘ğ‚Å‚«‚éB
-        // Ÿ‚Ì‚±‚Æ‚ğs‚¤B
-        // - glfw‚Ö‚ÌƒGƒ‰[ƒR[ƒ‹ƒoƒbƒN‚Ì“o˜^
+        // ï¿½Ğ‚Æ‚Â‚ÌƒEï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ÆƒRï¿½ï¿½ï¿½eï¿½Lï¿½Xï¿½gï¿½ï¿½ï¿½gï¿½pï¿½ï¿½ï¿½ï¿½ï¿½Û‚É‹Lï¿½qï¿½ï¿½ï¿½È—ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öï¿½
+        // ï¿½ï¿½ï¿½ï¿½debugï¿½É‚ï¿½ï¿½ï¿½ï¿½Aï¿½fï¿½oï¿½bï¿½Oï¿½pï¿½ÌƒRï¿½ï¿½ï¿½eï¿½Lï¿½Xï¿½gï¿½ï¿½ï¿½ì¬ï¿½ï¿½ï¿½é‚©ï¿½ï¿½ï¿½Iï¿½ï¿½ï¿½Å‚ï¿½ï¿½ï¿½ï¿½B
+        // ï¿½ï¿½ï¿½Ì‚ï¿½ï¿½Æ‚ï¿½ï¿½sï¿½ï¿½ï¿½B
+        // - glfwï¿½Ö‚ÌƒGï¿½ï¿½ï¿½[ï¿½Rï¿½[ï¿½ï¿½ï¿½oï¿½bï¿½Nï¿½Ì“oï¿½^
         // - glfwInit
-        // - glfwCreateWindow‚ÅGLFWwindow‚Ì¶¬
-        // - glfwMakeContextCurrent‚Å¶¬‚µ‚½ƒEƒBƒ“ƒhƒE‚ÌƒRƒ“ƒeƒLƒXƒg‚ğƒJƒŒƒ“ƒg‚Éİ’è
+        // - glfwCreateWindowï¿½ï¿½GLFWwindowï¿½Ìï¿½ï¿½ï¿½
+        // - glfwMakeContextCurrentï¿½Åï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Eï¿½Bï¿½ï¿½ï¿½hï¿½Eï¿½ÌƒRï¿½ï¿½ï¿½eï¿½Lï¿½Xï¿½gï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½gï¿½Éİ’ï¿½
         // - glewInit
         GLFWwindow *initializeWindowAndContext(int width, int height, const char* title,
             GLFWmonitor* monitor, GLFWwindow* share, bool debug=false);

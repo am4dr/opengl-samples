@@ -5,13 +5,13 @@
 using namespace std;
 
 namespace suika {
-    // ƒtƒ@ƒCƒ‹‚Ì“à—e‚ðstring‚Æ‚µ‚Ä•Ô‚·
+    // ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Ì“ï¿½ï¿½eï¿½ï¿½stringï¿½Æ‚ï¿½ï¿½Ä•Ô‚ï¿½
     string readFile(const string &filename) {
         ifstream file(filename, ifstream::binary);
         if (file.fail()) {
-            cerr << filename << ": ƒtƒ@ƒCƒ‹ƒI[ƒvƒ“Ž¸”s" << endl;
-            // Ž¸”sŽž‚Ìˆ—
-            throw "'" + filename + "'‚ÌƒI[ƒvƒ“‚ÉŽ¸”s";
+            cerr << filename << ": ï¿½tï¿½@ï¿½Cï¿½ï¿½ï¿½Iï¿½[ï¿½vï¿½ï¿½ï¿½ï¿½ï¿½s" << endl;
+            // ï¿½ï¿½ï¿½sï¿½ï¿½ï¿½Ìï¿½ï¿½ï¿½
+            throw "'" + filename + "'ï¿½ÌƒIï¿½[ï¿½vï¿½ï¿½ï¿½ÉŽï¿½ï¿½s";
         }
         file.seekg(0, file.end);
         std::streamoff length = file.tellg();
@@ -43,7 +43,7 @@ namespace suika {
             }
             GLFWwindow *window = glfwCreateWindow(width, height, title, monitor, share);
             glfwMakeContextCurrent(window);
-            glewInit();
+            gl3wInit();
             if (debug) {
                 glDebugMessageCallback(suika::gl::debug_message_callback, &std::cerr);
             }
